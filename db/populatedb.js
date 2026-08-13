@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
-const { Client } = require('pg');
+import pg from "pg";
+const { Client } = pg;
 
 const SQL = `
 -- 1. Create categories table first
@@ -41,10 +42,12 @@ async function main() {
   const client = new Client({
     // Uses command line argument if provided (e.g. node populatedb.js "postgresql://..."), 
     // otherwise falls back to default URI string
-    connectionString: process.argv[2] || "postgresql://cc:DankDBPW@localhost:5432/top_users",
+    connectionString: process.argv[2] || "postgresql://cc:DankDBPW@localhost:5432/inventory",
   });
   await client.connect();
   await client.query(SQL);
+  const res = await client.query("SELECT * FROM items;");
+  console.log("Rows found in DB:", res.rows);
   await client.end();
   console.log("done");
 }

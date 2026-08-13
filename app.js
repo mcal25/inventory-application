@@ -2,6 +2,7 @@ import express from 'express';
 import ejs from 'ejs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { storeRouter } from './routes/storeRouter';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -10,6 +11,7 @@ const assetsPath = path.join(__dirname, 'public');
 
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
+app.use('/', storeRouter);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
