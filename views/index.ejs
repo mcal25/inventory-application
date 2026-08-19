@@ -7,11 +7,10 @@
     <main class="max-w-md p-6 bg-slate-800 rounded-xl shadow-lg text-center">
       <h1 class="text-3xl font-bold underline">Grocery Store</h1>
       <% allStoreCategories.forEach((category => { %>
-        <p><%= category.name %> <%= category.price %></p>
+        <a href="/<%= category.name %>">
+          <p><%= category.name %></p>
+        </a>
       <% })) %>
-      <p class="mt-2 text-slate-300">
-        Your EJS views are styled and working seamlessly!
-      </p>
     </main>
   </body>
 </html>
