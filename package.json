@@ -11,7 +11,7 @@
     "build:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --minify",
     "watch:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
     "watch:server": "nodemon --ext js,ejs app.js",
-    "dev": "concurrently \"npm run watch:css\" \"npm run watch:server\""
+    "dev": "concurrently \"npm run watch:css\" \"npm run start\""
   },
   "repository": {
     "type": "git",

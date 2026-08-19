@@ -10,7 +10,12 @@
     <h1><%= category %></h1>
     <ul>
         <% items.forEach((item) => { %>
-            <li><%= item.name %></li>
+            <div class="store-item">
+                <li><%= item.name %></li>
+                <li>$<%= item.price %></li>
+                <li><%= item.quantity %></li>
+            </div>
+            <br>
         <% }); %>
     </ul>
   </body>
