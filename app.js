@@ -2,7 +2,7 @@ import express from 'express';
 import ejs from 'ejs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { storeRouter } from './routes/storeRouter';
+import { storeRouter } from './routes/storeRouter.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

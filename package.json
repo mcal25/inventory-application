@@ -7,7 +7,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --import=specifier-resolution-node/register --watch app.js",
-    "populate": "node --env-file=.env ./db/populatedb.js"
+    "populate": "node --env-file=.env ./db/populatedb.js",
+    "build:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "watch:server": "nodemon --ext js,ejs app.js",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:server\""
   },
   "repository": {
     "type": "git",
@@ -26,5 +30,11 @@
     "express": "^5.2.1",
     "pg": "^8.23.0",
     "specifier-resolution-node": "^1.1.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "concurrently": "^10.0.4",
+    "nodemon": "^3.1.14",
+    "tailwindcss": "^4.3.3"
   }
 }
