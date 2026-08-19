@@ -7,3 +7,4 @@ export const loadStoreItems = async (req, res) => {
 export const loadStoreCategories = async (req, res) => {
     const storeCategories = await db.getAllStoreCategories();
 }
+

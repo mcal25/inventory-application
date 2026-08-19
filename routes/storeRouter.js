@@ -1,6 +1,6 @@
 import { json, Router } from 'express';
 import { loadStoreCategories, loadStoreItems } from '../controllers/storeController.js';
-import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory } from '../db/queries.js';
+import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory, getSpecificStoreItem } from '../db/queries.js';
 
 const storeRouter = Router();
 const allStoreItems = await getAllStoreItems();
@@ -13,11 +13,19 @@ storeRouter.get('/', (req, res) => {
 
 storeRouter.get('/:category', async (req, res) => {
     const { category } = req.params;
-    console.log('category:', category);
-    console.log('function call', await getSpecificStoreCategory(category));
+    // console.log('category:', category);
+    // console.log('function call', await getSpecificStoreCategory(category));
     const items = await getSpecificStoreCategory(category);
-    console.log('this is items', items);
+    // console.log('this is items', items);
     res.render('category', {category: category, items: items});
+});
+
+storeRouter.get('/:category/:item', async (req, res) => {
+    const { category } = req.params;
+    const { item } = req.params;
+    const itemInfo = await getSpecificStoreItem(item);
+    console.log('Item info: ', itemInfo)
+    res.render('item', {category: category, item: item, itemInfo: itemInfo});
 });
 
 export { storeRouter };

@@ -3,17 +3,21 @@
 import pg from "pg";
 const { Client } = pg;
 
-const CREATE_TABLES_SQL = `
+// Drop existing tables first so schema updates (like UNIQUE constraints) actually apply
+const SCHEMA_SQL = `
+DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+
 -- 1. Create categories table
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE categories (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(255) NOT NULL UNIQUE
 );
 
--- 2. Create items table with foreign key reference
-CREATE TABLE IF NOT EXISTS items (
+-- 2. Create items table with UNIQUE name constraint enforced
+CREATE TABLE items (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name VARCHAR(255),
+  name VARCHAR(255) NOT NULL UNIQUE,
   price NUMERIC(10, 2),
   category_id INTEGER REFERENCES categories(id) ON DELETE SET NULL,
   quantity INTEGER,
@@ -21,7 +25,7 @@ CREATE TABLE IF NOT EXISTS items (
 );
 `;
 
-// 10 categories x 20 items = 200 items with sensible realistic price ranges
+// 10 categories x 20 items = 200 items
 const categoriesData = [
   {
     name: 'Electronics',
@@ -275,7 +279,6 @@ const categoriesData = [
   }
 ];
 
-// Generates a random price between the realistic min/max range
 function getRandomPrice(min, max) {
   return (Math.random() * (max - min) + min).toFixed(2);
 }
@@ -292,8 +295,8 @@ async function main() {
   try {
     await client.connect();
 
-    // 1. Create Tables
-    await client.query(CREATE_TABLES_SQL);
+    // 1. Re-create database tables with strict schema constraints
+    await client.query(SCHEMA_SQL);
 
     // 2. Insert Categories
     const categoryNames = categoriesData.map(c => `('${c.name}')`).join(',\n  ');
@@ -304,15 +307,19 @@ async function main() {
     `;
     await client.query(categoriesSQL);
 
-    // 3. Construct Bulk Items SQL Insert with sensible pricing
+    // 3. Construct Bulk Items SQL Insert with deduplication check
     const itemValues = [];
+    const seenNames = new Set();
+
     for (const cat of categoriesData) {
       for (const item of cat.items) {
+        if (seenNames.has(item.name)) continue;
+        seenNames.add(item.name);
+
         const price = getRandomPrice(item.min, item.max);
         const quantity = getRandomInt(2, 40);
         const desiredQuantity = getRandomInt(10, 50);
 
-        // Escape single quotes for SQL safety
         const escapedItemName = item.name.replace(/'/g, "''");
         const escapedCatName = cat.name.replace(/'/g, "''");
 
@@ -325,13 +332,14 @@ async function main() {
     const itemsSQL = `
       INSERT INTO items (name, price, category_id, quantity, desired_quantity)
       VALUES 
-        ${itemValues.join(',\n        ')};
+        ${itemValues.join(',\n        ')}
+      ON CONFLICT (name) DO NOTHING;
     `;
 
     await client.query(itemsSQL);
 
     const res = await client.query("SELECT COUNT(*) FROM items;");
-    console.log(`✅ Successfully seeded! Total items in DB: ${res.rows[0].count}`);
+    console.log(`✅ Successfully seeded! Total unique items in DB: ${res.rows[0].count}`);
 
   } catch (err) {
     console.error("❌ Seeding failed:", err.message);
