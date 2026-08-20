@@ -1,6 +1,6 @@
 import { json, Router } from 'express';
 import { loadStoreCategories, loadStoreItems } from '../controllers/storeController.js';
-import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory, getSpecificStoreItem, addCategory } from '../db/queries.js';
+import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory, getSpecificStoreItem, addCategory, addItem } from '../db/queries.js';
 
 const storeRouter = Router();
 const allStoreItems = await getAllStoreItems();
@@ -43,7 +43,9 @@ storeRouter.post('/new-category', async (req, res) => {
 });
 
 storeRouter.post('/new-item', async (req, res) => {
-    
+    // name, price, category_id, quantity, desired_quantity
+    await addItem(req.body.itemName, req.body.itemPrice, req.body.categorySelect, req.body.itemQuantity, req.body.itemDesiredQuantity);
+    res.redirect('/');
 });
 
 export { storeRouter };

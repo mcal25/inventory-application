@@ -39,15 +39,17 @@ export async function addCategory(category) {
   await pool.query(`
     INSERT INTO categories (name) 
     VALUES ($1);
-  `,[`${category}`]);
+  `,[category]);
   return category;
 }
 
-export async function addItem(item) {
+export async function addItem(name, price, categoryId, quantity, desiredQuantity) {
   await pool.query(`
     INSERT INTO items (name, price, category_id, quantity, desired_quantity) 
-    VALUES ('Item Name', 29.99, 1, 10, 20);
-  `)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+  `, [name, price, categoryId, quantity, desiredQuantity]);
+  return [name, price, categoryId, quantity, desiredQuantity];
 }
 
 export async function deleteCategory(category) {
@@ -58,5 +60,3 @@ export async function deleteItem(item) {
     
 }
 
-// INSERT INTO items (name, price, category_id, quantity, desired_quantity) 
-// VALUES ('Item Name', 29.99, 1, 10, 20);
