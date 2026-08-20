@@ -43,6 +43,13 @@ export async function addCategory(category) {
   return category;
 }
 
+export async function addItem(item) {
+  await pool.query(`
+    INSERT INTO items (name, price, category_id, quantity, desired_quantity) 
+    VALUES ('Item Name', 29.99, 1, 10, 20);
+  `)
+}
+
 export async function deleteCategory(category) {
 
 }
@@ -50,3 +57,6 @@ export async function deleteCategory(category) {
 export async function deleteItem(item) { 
     
 }
+
+// INSERT INTO items (name, price, category_id, quantity, desired_quantity) 
+// VALUES ('Item Name', 29.99, 1, 10, 20);

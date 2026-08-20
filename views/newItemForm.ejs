@@ -7,5 +7,38 @@
 </head>
 <body>
     <h1>New Item</h1>
+    <form method="post" action="/new-item">
+        <label for="itemName">
+            Name:
+            <input type="text" name="itemName">
+        </label>
+        <br>
+        <label for="itemPrice">
+            Price:
+            <input type="text" name="itemPrice">
+        </label>
+        <br>
+        <label for="quantity">
+            Quantity:
+            <input type="text" name="itemQuantity">
+        </label>
+        <br>
+            <label for="itemDesiredQuantity">
+            Desired Quantity:
+            <input type="text" name="itemDesiredQuantity">
+        </label>
+        <br>
+        <label for="categorySelect">
+            <select name="categories" id="categorySelect">
+                <option value="">-- Select a category --</option>
+                <% allStoreCategories.forEach((category) => { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                <% }) %>
+            </select>
+        </label>
+        <button type="submit">Add Item</button>
+    </form>
 </body>
 </html>
+
+<!-- name, price, category name, quantity, desired quantity -->

@@ -15,8 +15,9 @@ storeRouter.get('/new-category', (req, res) => {
     res.render('newCategoryForm');
 });
 
-storeRouter.get('/new-item', (req, res) => {
-    res.render('newItemForm');
+storeRouter.get('/new-item', async (req, res) => {
+    const allStoreCategories = await getAllStoreCategories();
+    res.render('newItemForm', {allStoreCategories: allStoreCategories});
 });
 
 storeRouter.get('/:category', async (req, res) => {
@@ -39,6 +40,10 @@ storeRouter.get('/:category/:item', async (req, res) => {
 storeRouter.post('/new-category', async (req, res) => {
     await addCategory(req.body.categoryName);
     res.redirect('/');
+});
+
+storeRouter.post('/new-item', async (req, res) => {
+    
 });
 
 export { storeRouter };
