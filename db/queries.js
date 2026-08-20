@@ -35,6 +35,14 @@ export async function getSpecificStoreItem(item) {
   return rows[0];
 }
 
+export async function addCategory(category) {
+  await pool.query(`
+    INSERT INTO categories (name) 
+    VALUES ($1);
+  `,[`${category}`]);
+  return category;
+}
+
 export async function deleteCategory(category) {
 
 }

@@ -1,12 +1,12 @@
 import { json, Router } from 'express';
 import { loadStoreCategories, loadStoreItems } from '../controllers/storeController.js';
-import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory, getSpecificStoreItem } from '../db/queries.js';
+import { getAllStoreCategories, getAllStoreItems, getSpecificStoreCategory, getSpecificStoreItem, addCategory } from '../db/queries.js';
 
 const storeRouter = Router();
 const allStoreItems = await getAllStoreItems();
-const allStoreCategories= await getAllStoreCategories();
 
-storeRouter.get('/', (req, res) => {
+storeRouter.get('/', async (req, res) => {
+    const allStoreCategories = await getAllStoreCategories();
     loadStoreCategories();
     res.render('index', { allStoreCategories: allStoreCategories});
 });
@@ -34,6 +34,11 @@ storeRouter.get('/:category/:item', async (req, res) => {
     const itemInfo = await getSpecificStoreItem(item);
     console.log('Item info: ', itemInfo)
     res.render('item', {category: category, item: item, itemInfo: itemInfo});
+});
+
+storeRouter.post('/new-category', async (req, res) => {
+    await addCategory(req.body.categoryName);
+    res.redirect('/');
 });
 
 export { storeRouter };
