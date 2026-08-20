@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+html {
+  background-color: #d2c2c2;
+}
+
 h1 {
   /* Define the rainbow gradient */
   background: linear-gradient(
@@ -30,6 +34,23 @@ h1 {
 .store-item {
   padding: 10px;
   margin: 1rem;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 10px;
+}
+
+#new-category-button {
+  border: 3px solid white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 10px;
+  background-color: blue;
+}
+
+#new-item-button {
+  color: white;
+  border: 3px solid white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 10px 15px;
+  background-color: blue;
 }

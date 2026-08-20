@@ -1,0 +1,17 @@
+Notes
+
+where I left off:
+
+    - thinking about how to add the post router functions as modeled in message-board-express to satisfy the create part of CRUD functionality
+
+        - will need to do sql queries for adding / deleting obviously
+
+        - will need forms to create new category / item
+
+
+
+
+
+questions:
+
+    - how to make clicking category load diff ejs file

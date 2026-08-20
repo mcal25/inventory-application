@@ -34,3 +34,11 @@ export async function getSpecificStoreItem(item) {
   );
   return rows[0];
 }
+
+export async function deleteCategory(category) {
+
+}
+
+export async function deleteItem(item) { 
+    
+}
