@@ -6,7 +6,7 @@
   <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
     <main class="max-w-md p-6 bg-slate-800 rounded-xl shadow-lg text-center">
       <h1 class="text-3xl font-bold underline">Inventory Manager</h1>
-      <button id="new-category-button">New Category</button>
+      <a href="new-category"><button  id="new-category-button">New Category</button></a>
       <% allStoreCategories.forEach((category => { %>
         <a href="/<%= category.name %>">
           <p><%= category.name %></p>

@@ -11,6 +11,14 @@ storeRouter.get('/', (req, res) => {
     res.render('index', { allStoreCategories: allStoreCategories});
 });
 
+storeRouter.get('/new-category', (req, res) => {
+    res.render('newCategoryForm');
+});
+
+storeRouter.get('/new-item', (req, res) => {
+    res.render('newItemForm');
+});
+
 storeRouter.get('/:category', async (req, res) => {
     const { category } = req.params;
     // console.log('category:', category);

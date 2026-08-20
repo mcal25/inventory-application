@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1><%= category %></h1>
-    <button id="new-item-button">New Item</button>
+    <a href="/new-item"><button id="new-item-button">New Item</button></a>
     <ul>
         <% items.forEach((item) => { %>
             <a href="/<%= category %>/<%= item.name %>">
