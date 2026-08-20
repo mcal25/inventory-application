@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 html {
   background-color: #d2c2c2;
@@ -7,23 +7,23 @@ html {
 h1 {
   /* Define the rainbow gradient */
   background: linear-gradient(
-    90deg, 
-    #ff0000, 
-    #ff7f00, 
-    #ffff00, 
-    #00ff00, 
-    #0000ff, 
-    #4b0082, 
+    90deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
     #9400d3
   );
-  
+
   /* Clip the background gradient to the text shape */
   -webkit-background-clip: text;
   background-clip: text;
-  
+
   /* Make the actual text fill transparent so the gradient shows through */
   color: transparent;
-  
+
   /* Optional styling for better visibility */
   font-family: system-ui, sans-serif;
   font-size: 3rem;

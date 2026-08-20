@@ -9,9 +9,13 @@ where I left off:
         - will need forms to create new category / item
 
 
+plan:
 
+    - do delete functionality for both category and items
+
+        
 
 
 questions:
 
-    - how to make clicking category load diff ejs file
+    - how to pass correct data to del query

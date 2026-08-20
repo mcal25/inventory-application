@@ -23,8 +23,16 @@ export async function getSpecificStoreCategory(category) {
   return rows;
 }
 
+export async function getCategoryById(id) {
+  const { rows } = await pool.query("SELECT * FROM categories WHERE id = $1;", [
+    id,
+  ]);
+  return rows[0];
+}
+
 export async function getSpecificStoreItem(item) {
-  const { rows } = await pool.query(`
+  const { rows } = await pool.query(
+    `
         SELECT items.*, categories.name AS category_name
           FROM items
           JOIN categories ON category_id = categories.id
@@ -36,29 +44,42 @@ export async function getSpecificStoreItem(item) {
 }
 
 export async function addCategory(category) {
-  await pool.query(`
+  await pool.query(
+    `
     INSERT INTO categories (name) 
     VALUES ($1);
-  `,[category]);
+  `,
+    [category],
+  );
   return category;
 }
 
-export async function addItem(name, price, categoryId, quantity, desiredQuantity) {
-  await pool.query(`
+export async function addItem(
+  name,
+  price,
+  categoryId,
+  quantity,
+  desiredQuantity,
+) {
+  await pool.query(
+    `
     INSERT INTO items (name, price, category_id, quantity, desired_quantity) 
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
-  `, [name, price, categoryId, quantity, desiredQuantity]);
+  `,
+    [name, price, categoryId, quantity, desiredQuantity],
+  );
   return [name, price, categoryId, quantity, desiredQuantity];
 }
 
-export async function deleteCategory(category) {
+export async function deleteCategory(category) {}
 
+export async function deleteItem(item) {
+  await pool.query(
+    `
+    DELETE FROM items
+    WHERE id = $1;
+  `,
+    [item],
+  );
 }
-
-// export async function deleteItem(item) { 
-//   await pool.query(`
-
-//   `);
-// }
-
