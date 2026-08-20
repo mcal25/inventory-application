@@ -56,7 +56,9 @@ export async function deleteCategory(category) {
 
 }
 
-export async function deleteItem(item) { 
-    
-}
+// export async function deleteItem(item) { 
+//   await pool.query(`
+
+//   `);
+// }
 
