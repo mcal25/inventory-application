@@ -1,4 +1,4 @@
-import { json, Router } from "express";
+import { json, request, Router } from "express";
 import {
   loadStoreCategories,
   loadStoreItems,
@@ -15,7 +15,9 @@ import {
   getCategoryIdFromCategoryName,
   deleteCategory,
   deleteItemsOfCategory,
+  updateCategory,
 } from "../db/queries.js";
+import { Query } from "pg";
 
 const storeRouter = Router();
 
@@ -34,6 +36,11 @@ storeRouter.get("/new-item", async (req, res) => {
   res.render("newItemForm", { allStoreCategories: allStoreCategories });
 });
 
+storeRouter.get("/update-category", (req, res) => {
+  const { category } = req.query;
+  res.render("updateCategoryForm", { category: category});
+});
+
 storeRouter.get("/:category", async (req, res) => {
   const { category } = req.params;
   // console.log('category:', category);
@@ -42,6 +49,8 @@ storeRouter.get("/:category", async (req, res) => {
   // console.log('this is items', items);
   res.render("category", { category: category, items: items });
 });
+
+
 
 storeRouter.get("/:category/:item", async (req, res) => {
   const { category } = req.params;
@@ -54,6 +63,19 @@ storeRouter.get("/:category/:item", async (req, res) => {
 storeRouter.post("/new-category", async (req, res) => {
   await addCategory(req.body.categoryName);
   res.redirect("/");
+});
+
+
+
+
+storeRouter.post("/update-category", async (req, res) => {
+  const { newCategoryName } = req.body;
+  console.log(newCategoryName);
+  const { category } = req.body;
+  console.log(category);
+  console.log(await getCategoryIdFromCategoryName(category));
+  await updateCategory(newCategoryName, await getCategoryIdFromCategoryName(category));
+  res.redirect('/');
 });
 
 storeRouter.post("/new-item", async (req, res) => {

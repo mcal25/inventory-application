@@ -2,17 +2,33 @@ Notes
 
 where I left off:
 
-    - Review last bundle of code changes to make sure I understand how it's working
-    - Finished delete functionality
+    - 
 
 
 plan:
 
-    - Review last bundle of code changes to make sure I understand how it's working
+    - update functionality
+
+        - have an update button on each category page and each item page
+
+            - clicking the button will 
+
+                - on category let you change the category name
+
+                - on item let you change the item
+
+                    - name
+                    - price
+                    - quantity
+                    - desired quantity
+                    - category
+
+                - via an update page that looks like the new item / category page
+
 
 
 
 
 questions:
 
-    - how to pass correct data to del query
+    - after updating the name of electrnoics the id stays the same but it visually goes to the bottom on both db and front end. why?

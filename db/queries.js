@@ -54,6 +54,17 @@ export async function addCategory(category) {
   return category;
 }
 
+export async function updateCategory(newCategoryName, currentId) {
+  await pool.query(
+    `
+    UPDATE categories
+    SET name = $1
+    WHERE id = $2;
+    `,
+    [newCategoryName, currentId],
+  );
+}
+
 export async function addItem(
   name,
   price,
@@ -84,13 +95,13 @@ export async function deleteItem(item) {
 
 
 export async function getCategoryIdFromCategoryName(category) {
-  return await pool.query(
+  return (await pool.query(
     `
     SELECT id FROM categories
     WHERE name = $1;
     `,
     [category],
-  ).id;
+  )).rows[0].id;
 }
 
 export async function deleteCategory(category) {

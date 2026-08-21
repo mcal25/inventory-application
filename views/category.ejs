@@ -9,6 +9,12 @@
   <body>
     <h1><%= category %></h1>
     <a href="/new-item"><button id="new-item-button">New Item</button></a>
+    <form action="/update-category" method="GET">
+      <input type="hidden" name="category" value="<%= category %>">
+      <button type="submit">
+        Update Category
+      </button>
+    </form>
     <form action="/delete-category" method="POST">
       <input type="hidden" name="category" value="<%= category %>"> 
       <button
