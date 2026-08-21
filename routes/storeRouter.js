@@ -12,6 +12,9 @@ import {
   addCategory,
   addItem,
   deleteItem,
+  getCategoryIdFromCategoryName,
+  deleteCategory,
+  deleteItemsOfCategory,
 } from "../db/queries.js";
 
 const storeRouter = Router();
@@ -76,6 +79,13 @@ storeRouter.post("/delete-item", async (req, res) => {
   const { itemId, category } = req.body;
   await deleteItem(itemId);
   res.redirect(`/${category}`);
+});
+
+storeRouter.post('/delete-category', async (req, res) => {
+  const { category } = req.body;
+  await deleteItemsOfCategory(await getCategoryIdFromCategoryName(category));
+  await deleteCategory(category);
+  res.redirect('/');
 });
 
 export { storeRouter };

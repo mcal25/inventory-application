@@ -72,8 +72,6 @@ export async function addItem(
   return [name, price, categoryId, quantity, desiredQuantity];
 }
 
-export async function deleteCategory(category) {}
-
 export async function deleteItem(item) {
   await pool.query(
     `
@@ -81,5 +79,40 @@ export async function deleteItem(item) {
     WHERE id = $1;
   `,
     [item],
+  );
+}
+
+
+export async function getCategoryIdFromCategoryName(category) {
+  return await pool.query(
+    `
+    SELECT id FROM categories
+    WHERE name = $1;
+    `,
+    [category],
+  ).id;
+}
+
+export async function deleteCategory(category) {
+  await pool.query(
+    `
+    DELETE FROM categories
+    WHERE name ILIKE $1;
+    `,
+    [category],
+  );
+}
+
+/**
+ * call this before deleting the category or unintended consequences!
+ * @param {*} category 
+ */
+export async function deleteItemsOfCategory(categoryId) {
+  await pool.query(
+    `
+    DELETE FROM items
+    WHERE category_id = $1;
+    `,
+    [categoryId],
   );
 }
